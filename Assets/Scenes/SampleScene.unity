@@ -579,7 +579,7 @@ Transform:
   m_GameObject: {fileID: 1001885850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_Children:
   - {fileID: 290388473}
   - {fileID: 1869131703}
@@ -728,6 +728,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1777304653}
   - component: {fileID: 1777304654}
+  - component: {fileID: 1777304655}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -763,6 +764,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   Acceleration: 0.01
+--- !u!114 &1777304655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777304652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a51750bba32a2c040a1caf32d59ea341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Seed: 56427
+  Height: -75
+  MinDistance: 3
+  MaxDistance: 10
+  Solids:
+  - {fileID: 2675311218634786957, guid: bd94fe260bfa2c34284da18de44709e1, type: 3}
+  RootBehavior: {fileID: 7038422633279009572, guid: b8009b352840be04998d21b2f50b0d5d,
+    type: 3}
 --- !u!850595691 &1802466550
 LightingSettings:
   m_ObjectHideFlags: 0
