@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cb762f8e28514242a3ad3cbf478899f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
+  Speed: 5
   Acceleration: 0.01
 --- !u!114 &1777304655
 MonoBehaviour:
@@ -779,8 +779,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Seed: 56427
   Height: -75
-  MinDistance: 10
-  MaxDistance: 20
+  MinDistance: 7.5
+  MaxDistance: 15
   Obstacles:
   - Prefab: {fileID: 6187163392084564199, guid: 972e661d3e4d7684c910e677fcd74939,
       type: 3}
