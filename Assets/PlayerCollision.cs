@@ -18,19 +18,22 @@ public class PlayerCollision : MonoBehaviour
 
   void Update()
   {
-    if (Time.timeScale > 0)
-    {
-      var collisionLast = collision;
-      var colliders = Physics.OverlapSphere(transform.position, radius);
-      var cutouts = colliders.Where(c => c.gameObject.layer == cutoutLayer).ToArray();
-      collision = colliders.Any(c => cutouts.All(cutout => !cutout.transform.IsChildOf(c.transform)));
+    var collisionLast = collision;
+    var colliders = Physics.OverlapSphere(transform.position, radius);
+    var cutouts = colliders.Where(c => c.gameObject.layer == cutoutLayer).ToArray();
+    collision = colliders.Any(c => cutouts.All(cutout => !cutout.transform.IsChildOf(c.transform)));
 
-      if (collision && !collisionLast)
-      {
-        GetComponent<AudioSource>().Play();
-        var fog = GameObject.FindObjectOfType<FogController>();
-        fog.HurtPulse();
-      }
+    if (collision && !collisionLast && Time.timeScale > 0)
+    {
+
+      GetComponent<AudioSource>().Play();
+      var fog = GameObject.FindObjectOfType<FogController>();
+      fog.HurtPulse();
     }
+  }
+
+  public bool GetCollision()
+  {
+    return collision;
   }
 }
