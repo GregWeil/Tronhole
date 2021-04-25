@@ -31,6 +31,7 @@ public class ObstacleSpawner : MonoBehaviour
       var root = Instantiate(RootBehavior, new Vector3(0, Height + Distance, 0), Quaternion.identity);
       root.transform.localRotation = Quaternion.Euler(0, Random.value * 360f, 0);
       var solid = Instantiate(definition.Prefab, root.transform);
+      solid.transform.localRotation = Quaternion.Euler(0, Random.value * 360f, 0);
       solid.transform.localPosition = new Vector3(Random.Range(-1, 1) * definition.MaxTranslation.x, 0, Random.Range(-1, 1) * definition.MaxTranslation.y);
       solid.transform.localScale = new Vector3(1, 1, 1) * Random.Range(definition.MinScale, definition.MaxScale);
       Distance -= Random.Range(MinDistance, MaxDistance);
