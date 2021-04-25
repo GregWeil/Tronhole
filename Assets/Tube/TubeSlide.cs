@@ -5,6 +5,8 @@ using UnityEngine;
 public class TubeSlide : MonoBehaviour
 {
   public float Distance;
+  public GameObject TopCap;
+  public GameObject Floor;
 
   private SpeedController Controller;
 
@@ -22,6 +24,12 @@ public class TubeSlide : MonoBehaviour
         transform.localPosition.x,
         transform.localPosition.y - Distance - Distance,
         transform.localPosition.z);
+      if (Floor != null)
+      {
+        Destroy(Floor);
+        Floor = null;
+      }
+      TopCap.SetActive(true);
     }
   }
 }
