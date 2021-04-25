@@ -764,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  Acceleration: 0.01
+  Acceleration: 0.03
 --- !u!114 &1777304655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
   - Prefab: {fileID: 6187163392084564199, guid: 972e661d3e4d7684c910e677fcd74939,
       type: 3}
     MaxTranslation: {x: 0.3, y: 0}
-    MinScale: 30
+    MinScale: 25
     MaxScale: 45
   - Prefab: {fileID: 8252087503555003897, guid: ee3b6b3cea827574a9dd88fce8cc9f1e,
       type: 3}
@@ -811,6 +811,11 @@ MonoBehaviour:
     MaxTranslation: {x: 0.25, y: 0.25}
     MinScale: 15
     MaxScale: 25
+  - Prefab: {fileID: 5677852197686330865, guid: 54e4dc380d373614bb1ad2fcb63ad778,
+      type: 3}
+    MaxTranslation: {x: 0.25, y: 0.25}
+    MinScale: 1
+    MaxScale: 1
   RootBehavior: {fileID: 7038422633279009572, guid: b8009b352840be04998d21b2f50b0d5d,
     type: 3}
 --- !u!82 &1777304656
