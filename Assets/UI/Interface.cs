@@ -17,6 +17,10 @@ public class Interface : MonoBehaviour
   public float CursorAngle;
   public float CursorMinScale;
   public float CursorScaleSpeed;
+  public AudioSource menuSound;
+  public AudioClip clip;
+  public AudioSource ambience;
+  public AudioSource music;
 
   private float SelectValue;
   private Vector3 CursorScaleBase;
@@ -85,6 +89,8 @@ public class Interface : MonoBehaviour
     StartButton.SetActive(false);
     QuitButton.SetActive(false);
     LookDown.SetActive(true);
+    menuSound.Play();
+
 
     yield return null;
 
@@ -98,7 +104,9 @@ public class Interface : MonoBehaviour
     }
 
     Time.timeScale = 1f;
-  }
+    ambience.Play();
+    music.Play();
+    }
 
   IEnumerator SelectQuit()
   {

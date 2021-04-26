@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class HealthAndScore : MonoBehaviour
 {
   public int Health;
@@ -52,6 +52,7 @@ public class HealthAndScore : MonoBehaviour
     if (Health < 0)
     {
       Time.timeScale = 0f;
+            Death();
     }
     HealthDisplay.text = Health >= 0 ? Health.ToString() : "---";
   }
@@ -65,4 +66,9 @@ public class HealthAndScore : MonoBehaviour
       PlayerPrefs.SetInt("BestScore", Score);
     }
   }
+    private void Death()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
 }
+
