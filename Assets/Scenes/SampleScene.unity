@@ -542,7 +542,7 @@ MonoBehaviour:
   SelectClearDelay: 0.25
   LookDownThreshold: 30
   CursorDistance: 5
-  CursorAngle: 15
+  CursorAngle: 5
   CursorMinScale: 0.25
   CursorScaleSpeed: 10
 --- !u!1 &513017671
@@ -1960,7 +1960,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  Acceleration: 0.03
+  Acceleration: 0.025
 --- !u!114 &1777304655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1983,36 +1983,53 @@ MonoBehaviour:
     MaxTranslation: {x: 0.3, y: 0}
     MinScale: 25
     MaxScale: 45
+    LimitRotation: 1
   - Prefab: {fileID: 7116288421800930365, guid: 99d205d54c6488a4f8a53c65b86da372,
       type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
     MinScale: 1.25
     MaxScale: 2
+    LimitRotation: 1
   - Prefab: {fileID: 4967316500722763593, guid: 8ad94165e0b418540a265aeefc81436c,
       type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
     MinScale: 15
     MaxScale: 25
+    LimitRotation: 0
   - Prefab: {fileID: 5044139513636233105, guid: c9ff2d36338b17b4299be3fc84eb88ea,
       type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
     MinScale: 15
     MaxScale: 30
+    LimitRotation: 0
   - Prefab: {fileID: 275274427384080091, guid: 0c7e590c31f38b7449b2abee0bffede9, type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
     MinScale: 1.25
     MaxScale: 2
+    LimitRotation: 1
   - Prefab: {fileID: 6025034457738671919, guid: f22c98bd7a8619841b994ea57f5b3348,
       type: 3}
     MaxTranslation: {x: 0.25, y: 0.25}
     MinScale: 15
     MaxScale: 25
+    LimitRotation: 0
   - Prefab: {fileID: 5677852197686330865, guid: 54e4dc380d373614bb1ad2fcb63ad778,
       type: 3}
     MaxTranslation: {x: 0.25, y: 0.25}
     MinScale: 1
     MaxScale: 1
+    LimitRotation: 1
   RootBehavior: {fileID: 7038422633279009572, guid: b8009b352840be04998d21b2f50b0d5d,
+    type: 3}
+  RotateChance: 0.2
+  RotateSpeedMin: 30
+  RotateSpeedMax: 180
+  RotateBehavior: {fileID: 433784346969233487, guid: d1a1247218bbf104ea79d01f0263bea7,
+    type: 3}
+  SlideChance: 0.1
+  SlideSpeedMin: 0.25
+  SlideSpeedMax: 2
+  SlideBehavior: {fileID: 566245993095575929, guid: 44bca65717a1e614cbae143a9e8748da,
     type: 3}
 --- !u!82 &1777304656
 AudioSource:

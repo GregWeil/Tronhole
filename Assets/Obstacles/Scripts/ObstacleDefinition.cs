@@ -7,4 +7,5 @@ public class ObstacleDefinition
   public Vector2 MaxTranslation;
   public float MinScale;
   public float MaxScale;
+  public bool LimitRotation;
 }

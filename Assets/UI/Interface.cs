@@ -58,6 +58,11 @@ public class Interface : MonoBehaviour
         }
         hit = true;
       }
+
+      if (Input.GetKeyDown(KeyCode.F1))
+      {
+        Time.timeScale = 1f;
+      }
     }
     var selectSpeed = hit ? SelectDelay : SelectClearDelay;
     SelectValue = Mathf.MoveTowards(SelectValue, hit ? 1f : 0f, Time.unscaledDeltaTime / selectSpeed);
