@@ -800,7 +800,7 @@ MonoBehaviour:
   CursorProgress: {fileID: 989131168}
   OptionsDelay: 3
   SelectDelay: 2
-  SelectClearDelay: 0.25
+  SelectClearDelay: 0.5
   LookDownThreshold: 30
   CursorDistance: 5
   CursorAngle: 5
@@ -2713,14 +2713,14 @@ MonoBehaviour:
     Prefab: {fileID: 7116288421800930365, guid: 99d205d54c6488a4f8a53c65b86da372,
       type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
-    MinScale: 1.25
+    MinScale: 1
     MaxScale: 2
     LimitRotation: 1
   - Weight: 0.75
     Prefab: {fileID: 4967316500722763593, guid: 8ad94165e0b418540a265aeefc81436c,
       type: 3}
     MaxTranslation: {x: 0.4, y: 0.2}
-    MinScale: 15
+    MinScale: 10
     MaxScale: 25
     LimitRotation: 0
   - Weight: 0.75
@@ -2746,8 +2746,8 @@ MonoBehaviour:
   - Weight: 1
     Prefab: {fileID: 5677852197686330865, guid: 54e4dc380d373614bb1ad2fcb63ad778,
       type: 3}
-    MaxTranslation: {x: 0.25, y: 0.25}
-    MinScale: 1
+    MaxTranslation: {x: 0.2, y: 0.2}
+    MinScale: 0.75
     MaxScale: 1
     LimitRotation: 1
   - Weight: 0.1

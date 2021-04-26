@@ -64,8 +64,8 @@ public class Interface : MonoBehaviour
         Time.timeScale = 1f;
       }
     }
-    var selectSpeed = hit ? SelectDelay : SelectClearDelay;
-    SelectValue = Mathf.MoveTowards(SelectValue, hit ? 1f : 0f, Time.unscaledDeltaTime / selectSpeed);
+    var selectSpeed = (hit && CursorScale >= 1f) ? SelectDelay : SelectClearDelay;
+    SelectValue = Mathf.MoveTowards(SelectValue, (hit && CursorScale >= 1f) ? 1f : 0f, Time.unscaledDeltaTime / selectSpeed);
     CursorProgress.fillAmount = SelectValue;
     var targetScale = hit ? 1f : CursorMinScale;
     CursorScale = Mathf.MoveTowards(CursorScale, targetScale, CursorScaleSpeed * Time.unscaledDeltaTime);
