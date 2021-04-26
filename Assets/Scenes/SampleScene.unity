@@ -2898,8 +2898,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ebd7f41e9884b41973274f3c9eb2cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 3
+  Health: 1
   CheckpointSound: {fileID: 1777304659}
+  HealthDisplay: {fileID: 443518771}
+  ScoreDisplay: {fileID: 1701728582}
+  BestDisplay: {fileID: 652611761}
+  ScoreDelay: 3
+  ScoreInterval: 1
 --- !u!82 &1777304659
 AudioSource:
   m_ObjectHideFlags: 0
