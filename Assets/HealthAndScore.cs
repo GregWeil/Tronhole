@@ -11,6 +11,7 @@ public class HealthAndScore : MonoBehaviour
   public UnityEngine.UI.Text BestDisplay;
   public float ScoreDelay;
   public float ScoreInterval;
+  public AudioSource DeathSound;
 
   private int Best;
   private int Score;
@@ -51,7 +52,8 @@ public class HealthAndScore : MonoBehaviour
     Health += amount;
     if (Health < 0)
     {
-      Time.timeScale = 0f;
+            DeathSound.Play();
+            Time.timeScale = 0f;
             Death();
     }
     HealthDisplay.text = Health >= 0 ? Health.ToString() : "---";
