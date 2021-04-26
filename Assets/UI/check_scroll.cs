@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class check_scroll : MonoBehaviour
 {
-    public float Scroll_speed = 0.1f;
-    float offset;
-
+    public float Scroll_speed = 0.001f;
+    float offset = 0f;
+    //Renderer rend;
+    //public Material mat;
+    private void Start()
+    {
+        //rend = GetComponent<Renderer>();
+    }
     // Update is called once per frame
     void Update()
     {
-        offset = (Time.time * Scroll_speed);
-        GetComponent<Renderer>().material.SetTextureOffset("_MainTex" , new Vector2(offset, 0));
+        offset += Scroll_speed;
+        //mat.SetTextureOffset("_BaseColorMap" , new Vector2(offset, 0));
+        transform.Rotate(0f, 0f, Scroll_speed);
     }
 }
