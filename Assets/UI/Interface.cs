@@ -7,16 +7,63 @@ public class Interface : MonoBehaviour
   public GameObject StartButton;
   public GameObject QuitButton;
   public GameObject LookDown;
+  public GameObject Cursor;
+  public UnityEngine.UI.Image CursorProgress;
   public float OptionsDelay;
   public float SelectDelay;
+  public float SelectClearDelay;
   public float LookDownThreshold;
+  public float CursorDistance;
+  public float CursorAngle;
+  public float CursorMinScale;
+  public float CursorScaleSpeed;
 
-  private bool CursorActive;
+  private float SelectValue;
+  private Vector3 CursorScaleBase;
+  private float CursorScale;
+  private int UILayerMask;
 
   void Start()
   {
-    CursorActive = false;
-    StartCoroutine("ShowOptions");
+    SelectValue = 0;
+    CursorScaleBase = Cursor.transform.localScale;
+    CursorScale = CursorMinScale;
+    UILayerMask = LayerMask.GetMask("UI");
+    StartCoroutine(ShowOptions());
+  }
+
+  void Update()
+  {
+    var offset = Camera.main.transform.TransformVector(Quaternion.Euler(CursorAngle, 0, 0) * Vector3.forward);
+    Cursor.transform.position = Camera.main.transform.position + offset * CursorDistance;
+    Cursor.transform.LookAt(Camera.main.transform.position);
+    Cursor.transform.localScale = CursorScale * CursorScaleBase;
+
+    var hit = false;
+    if (Cursor.activeInHierarchy)
+    {
+      var hits = Physics.RaycastAll(Camera.main.transform.position, offset, float.PositiveInfinity, UILayerMask);
+      if (hits.Length == 1)
+      {
+        if (SelectValue == 1f)
+        {
+          if (hits[0].collider.gameObject == StartButton)
+          {
+            StartCoroutine(SelectStart());
+          }
+          else if (hits[0].collider.gameObject == QuitButton)
+          {
+            StartCoroutine(SelectQuit());
+          }
+        }
+        hit = true;
+      }
+    }
+    var selectSpeed = hit ? SelectDelay : SelectClearDelay;
+    SelectValue = Mathf.MoveTowards(SelectValue, hit ? 1f : 0f, Time.unscaledDeltaTime / selectSpeed);
+    CursorProgress.fillAmount = SelectValue;
+    var targetScale = hit ? 1f : CursorMinScale;
+    CursorScale = Mathf.MoveTowards(CursorScale, targetScale, CursorScaleSpeed * Time.unscaledDeltaTime);
   }
 
   IEnumerator ShowOptions()
@@ -24,18 +71,17 @@ public class Interface : MonoBehaviour
     yield return new WaitForSecondsRealtime(OptionsDelay);
     StartButton.SetActive(true);
     QuitButton.SetActive(true);
-    CursorActive = true;
-    yield return new WaitForSecondsRealtime(5);
-    StartCoroutine("SelectStart");
+    Cursor.SetActive(true);
   }
 
   IEnumerator SelectStart()
   {
-    CursorActive = false;
-    QuitButton.SetActive(false);
-    yield return new WaitForSecondsRealtime(SelectDelay);
+    Cursor.SetActive(false);
     StartButton.SetActive(false);
+    QuitButton.SetActive(false);
     LookDown.SetActive(true);
+
+    yield return null;
 
     var playerCollision = GameObject.FindObjectOfType<PlayerCollision>();
     while (true)
@@ -51,9 +97,10 @@ public class Interface : MonoBehaviour
 
   IEnumerator SelectQuit()
   {
-    CursorActive = false;
+    Cursor.SetActive(false);
     StartButton.SetActive(false);
-    yield return new WaitForSecondsRealtime(SelectDelay);
+    QuitButton.SetActive(false);
+    yield return null;
     Application.Quit();
   }
 }
