@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-  public float Radius;
   public float Timeout;
 
   public UnityEngine.Events.UnityEvent OnHit;
   public UnityEngine.Events.UnityEvent OnCheckpoint;
 
+  private SpeedController Speed;
+  private Vector3 positionLast;
   private bool collision;
   private float timer;
   private float checkpointTimer;
@@ -18,6 +19,8 @@ public class PlayerCollision : MonoBehaviour
 
   void Start()
   {
+    Speed = GameObject.FindObjectOfType<SpeedController>();
+    positionLast = transform.position;
     collision = false;
     timer = Timeout;
     checkpointTimer = Timeout;
@@ -26,11 +29,14 @@ public class PlayerCollision : MonoBehaviour
 
   void Update()
   {
-    var colliders = Physics.OverlapSphere(transform.position, Radius);
-    var cutouts = colliders.Where(c => c.gameObject.layer == cutoutLayer).ToArray();
-    collision = colliders.Any(c => cutouts.All(cutout => !cutout.transform.IsChildOf(c.transform)));
+    positionLast += Vector3.up * Speed.Speed * Time.deltaTime;
+    var offset = transform.position - positionLast;
+    if (offset.sqrMagnitude <= 0f) return;
+    var hits = Physics.RaycastAll(positionLast, offset.normalized, offset.magnitude);
+    var cutouts = hits.Where(h => h.collider.gameObject.layer == cutoutLayer).ToArray();
+    collision = hits.Any(h => cutouts.All(cutout => !cutout.transform.IsChildOf(h.transform)));
 
-    if (colliders.Any(c => c.tag == "Respawn"))
+    if (hits.Any(h => h.collider.gameObject.tag == "Respawn"))
     {
       if (checkpointTimer <= 0)
       {
@@ -47,6 +53,8 @@ public class PlayerCollision : MonoBehaviour
     }
     timer -= Time.deltaTime;
     checkpointTimer -= Time.deltaTime;
+
+    positionLast = transform.position;
   }
 
   public bool GetCollision()

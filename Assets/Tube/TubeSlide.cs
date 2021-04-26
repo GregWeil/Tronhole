@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TubeSlide : MonoBehaviour
 {
-  public float Distance;
   public GameObject Surface;
+  public float ModelHeight;
+  public float TextureTiling;
 
   private SpeedController Controller;
 
@@ -16,12 +17,13 @@ public class TubeSlide : MonoBehaviour
 
   void Update()
   {
+    float distance = ModelHeight / TextureTiling;
     transform.localPosition += Vector3.up * Controller.Speed * Time.deltaTime;
-    if (transform.localPosition.y > Distance)
+    if (transform.localPosition.y > distance)
     {
       transform.localPosition = new Vector3(
         transform.localPosition.x,
-        transform.localPosition.y - Distance - Distance,
+        transform.localPosition.y - distance - distance,
         transform.localPosition.z);
 
       if (Surface != null)

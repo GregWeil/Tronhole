@@ -12,6 +12,7 @@ public class HealthAndScore : MonoBehaviour
   public float ScoreDelay;
   public float ScoreInterval;
   public AudioSource DeathSound;
+  public float RespawnDelay;
 
   private int Best;
   private int Score;
@@ -52,9 +53,9 @@ public class HealthAndScore : MonoBehaviour
     Health += amount;
     if (Health < 0)
     {
-            DeathSound.Play();
-            Time.timeScale = 0f;
-            Death();
+      DeathSound.Play();
+      Time.timeScale = 0f;
+      StartCoroutine(Death());
     }
     HealthDisplay.text = Health >= 0 ? Health.ToString() : "---";
   }
@@ -68,9 +69,10 @@ public class HealthAndScore : MonoBehaviour
       PlayerPrefs.SetInt("BestScore", Score);
     }
   }
-    private void Death()
-    {
-        SceneManager.LoadScene("SampleScene");
-    }
+  private IEnumerator Death()
+  {
+    yield return new WaitForSecondsRealtime(RespawnDelay);
+    SceneManager.LoadScene("SampleScene");
+  }
 }
 

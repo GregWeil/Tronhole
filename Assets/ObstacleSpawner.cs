@@ -8,18 +8,22 @@ public class ObstacleSpawner : MonoBehaviour
   public float Height;
   public float MinDistance;
   public float MaxDistance;
+  public float DifficultyScaling;
 
   public ObstacleDefinition[] Obstacles;
   public GameObject RootBehavior;
 
-  public float RotateChance;
+  public AnimationCurve RotateChance;
   public float RotateSpeedMin;
   public float RotateSpeedMax;
+  public AnimationCurve RotationSpeedBias;
   public GameObject RotateBehavior;
 
-  public float SlideChance;
+  public AnimationCurve SlideChance;
+  public AnimationCurve DoubleSlideChance;
   public float SlideSpeedMin;
   public float SlideSpeedMax;
+  public AnimationCurve SlideSpeedBias;
   public GameObject SlideBehavior;
 
   private SpeedController Speed;
@@ -37,25 +41,30 @@ public class ObstacleSpawner : MonoBehaviour
     Distance += Speed.Speed * Time.deltaTime;
     if (Distance >= 0)
     {
-      var definition = PickObstacle();
+      var difficulty = CurrentDifficulty();
+      var definition = PickObstacle(difficulty);
       var root = Instantiate(RootBehavior, new Vector3(0, Height + Distance, 0), Quaternion.identity);
       root.transform.localRotation = Quaternion.Euler(0, Random.value * 360f, 0);
-      if (Random.value <= RotateChance)
+      if (Random.value <= RotateChance.Evaluate(difficulty))
       {
         root = Instantiate(RotateBehavior, root.transform);
-        root.GetComponent<BasicRotation>().SpinSpeed = Random.Range(RotateSpeedMin, RotateSpeedMax) * (Random.value < 0.5 ? 1f : -1f);
+        float value = Mathf.Pow(Random.value, 1f / RotationSpeedBias.Evaluate(difficulty));
+        float direction = Random.value < 0.5 ? 1f : -1f;
+        root.GetComponent<BasicRotation>().SpinSpeed = Mathf.Lerp(RotateSpeedMin, RotateSpeedMax, value) * direction;
       }
-      bool slidingX = Random.value < SlideChance;
-      bool slidingZ = Random.value < SlideChance;
+      bool singleSlide = Random.value < SlideChance.Evaluate(difficulty);
+      bool doubleSlide = singleSlide && (Random.value < DoubleSlideChance.Evaluate(difficulty));
+      bool slidingX = doubleSlide || (singleSlide && (Random.value < 0.5f));
+      bool slidingZ = doubleSlide || (singleSlide && !slidingX);
       if (slidingX || slidingZ)
       {
         root = Instantiate(SlideBehavior, root.transform);
         var slide = root.GetComponent<SlideBehavior>();
         slide.TimeOffset = Random.insideUnitSphere * 1024;
         slide.SlideSpeed = new Vector3(
-          Random.Range(SlideSpeedMin, SlideSpeedMax),
-          Random.Range(SlideSpeedMin, SlideSpeedMax),
-          Random.Range(SlideSpeedMin, SlideSpeedMax));
+          Mathf.Lerp(SlideSpeedMin, SlideSpeedMax, Mathf.Pow(Random.value, 1f / SlideSpeedBias.Evaluate(difficulty))),
+          Mathf.Lerp(SlideSpeedMin, SlideSpeedMax, Mathf.Pow(Random.value, 1f / SlideSpeedBias.Evaluate(difficulty))),
+          Mathf.Lerp(SlideSpeedMin, SlideSpeedMax, Mathf.Pow(Random.value, 1f / SlideSpeedBias.Evaluate(difficulty))));
         slide.SlideRange = new Vector3(slidingX ? definition.MaxTranslation.x : 0, 0, slidingZ ? definition.MaxTranslation.y : 0);
       }
       var solid = Instantiate(definition.Prefab, root.transform);
@@ -69,17 +78,22 @@ public class ObstacleSpawner : MonoBehaviour
     }
   }
 
-  private ObstacleDefinition PickObstacle()
+  private float CurrentDifficulty()
+  {
+    return 1f - 1f / (DifficultyScaling * Time.time + 1f);
+  }
+
+  private ObstacleDefinition PickObstacle(float difficulty)
   {
     float total = 0f;
     foreach (var def in Obstacles)
     {
-      total += def.Weight;
+      total += def.Weight.Evaluate(difficulty);
     }
     var value = Random.value * total;
     foreach (var def in Obstacles)
     {
-      value -= def.Weight;
+      value -= def.Weight.Evaluate(difficulty);
       if (value <= 0)
       {
         return def;
