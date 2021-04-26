@@ -37,7 +37,7 @@ public class ObstacleSpawner : MonoBehaviour
     Distance += Speed.Speed * Time.deltaTime;
     if (Distance >= 0)
     {
-      var definition = Obstacles[Random.Range(0, Obstacles.Length)];
+      var definition = PickObstacle();
       var root = Instantiate(RootBehavior, new Vector3(0, Height + Distance, 0), Quaternion.identity);
       root.transform.localRotation = Quaternion.Euler(0, Random.value * 360f, 0);
       if (Random.value <= RotateChance)
@@ -67,5 +67,24 @@ public class ObstacleSpawner : MonoBehaviour
       solid.transform.localScale = new Vector3(1, 1, 1) * Random.Range(definition.MinScale, definition.MaxScale);
       Distance -= Random.Range(MinDistance, MaxDistance);
     }
+  }
+
+  private ObstacleDefinition PickObstacle()
+  {
+    float total = 0f;
+    foreach (var def in Obstacles)
+    {
+      total += def.Weight;
+    }
+    var value = Random.value * total;
+    foreach (var def in Obstacles)
+    {
+      value -= def.Weight;
+      if (value <= 0)
+      {
+        return def;
+      }
+    }
+    return Obstacles[0];
   }
 }
