@@ -2138,6 +2138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Timeout: 1
+  Radius: 0.05
   OnHit:
     m_PersistentCalls:
       m_Calls:

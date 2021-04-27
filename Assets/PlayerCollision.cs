@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
   public float Timeout;
+  public float Radius;
 
   public UnityEngine.Events.UnityEvent OnHit;
   public UnityEngine.Events.UnityEvent OnCheckpoint;
@@ -30,13 +31,15 @@ public class PlayerCollision : MonoBehaviour
   void Update()
   {
     positionLast += Vector3.up * Speed.Speed * Time.deltaTime;
-    var offset = transform.position - positionLast;
-    if (offset.sqrMagnitude <= 0f) return;
-    var hits = Physics.RaycastAll(positionLast, offset.normalized, offset.magnitude);
-    var cutouts = hits.Where(h => h.collider.gameObject.layer == cutoutLayer).ToArray();
-    collision = hits.Any(h => cutouts.All(cutout => !cutout.transform.IsChildOf(h.transform)));
+  }
 
-    if (hits.Any(h => h.collider.gameObject.tag == "Respawn"))
+  void LateUpdate()
+  {
+    var colliders = GetColliding();
+    var cutouts = colliders.Where(c => c.gameObject.layer == cutoutLayer).ToArray();
+    collision = colliders.Any(c => cutouts.All(cutout => !cutout.transform.IsChildOf(c.transform)));
+
+    if (colliders.Any(c => c.gameObject.tag == "Respawn"))
     {
       if (checkpointTimer <= 0)
       {
@@ -55,6 +58,15 @@ public class PlayerCollision : MonoBehaviour
     checkpointTimer -= Time.deltaTime;
 
     positionLast = transform.position;
+  }
+
+  private IEnumerable<Collider> GetColliding()
+  {
+    var cols = Physics.OverlapSphere(transform.position, Radius);
+    var offset = positionLast - transform.position;
+    if (offset.sqrMagnitude <= 0f) return cols;
+    var hits = Physics.SphereCastAll(transform.position, Radius, offset.normalized, offset.magnitude);
+    return hits.Select(h => h.collider).Concat(cols);
   }
 
   public bool GetCollision()
