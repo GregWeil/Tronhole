@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObstacleSpawner : MonoBehaviour
 {
   public int Seed;
+  public bool UseSeed;
   public float Height;
   public float MinDistance;
   public float MaxDistance;
@@ -31,7 +32,7 @@ public class ObstacleSpawner : MonoBehaviour
 
   void Start()
   {
-    Random.InitState(Seed);
+    if (UseSeed) Random.InitState(Seed);
     Speed = GameObject.FindObjectOfType<SpeedController>();
     Distance = Mathf.Abs(Height / 2f);
   }
