@@ -801,7 +801,7 @@ MonoBehaviour:
   Cursor: {fileID: 1343973737}
   CursorProgress: {fileID: 989131168}
   OptionsDelay: 3
-  SelectDelay: 2
+  SelectDelay: 0.75
   SelectClearDelay: 0.5
   LookDownThreshold: 30
   CursorDistance: 5
@@ -810,7 +810,7 @@ MonoBehaviour:
   CursorScaleSpeed: 10
   menuSound: {fileID: 504836927}
   clip: {fileID: 8300000, guid: ab425fa3a7ab7e04d818a979124ee1ce, type: 3}
-  ambience: {fileID: 1041946506}
+  ambience: {fileID: 1744494014}
   music: {fileID: 1777304656}
 --- !u!82 &504836927
 AudioSource:
@@ -1558,7 +1558,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1041946505}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e8852ab1df4ca32438421f3badd12385, type: 3}
@@ -2618,7 +2618,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744494013}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e8852ab1df4ca32438421f3badd12385, type: 3}
