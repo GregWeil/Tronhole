@@ -29,12 +29,14 @@ public class ObstacleSpawner : MonoBehaviour
 
   private SpeedController Speed;
   private float Distance;
+  private float BaseTime;
 
   void Start()
   {
     if (UseSeed) Random.InitState(Seed);
     Speed = GameObject.FindObjectOfType<SpeedController>();
     Distance = Mathf.Abs(Height / 2f);
+    BaseTime = Time.time;
   }
 
   void Update()
@@ -81,7 +83,8 @@ public class ObstacleSpawner : MonoBehaviour
 
   private float CurrentDifficulty()
   {
-    return 1f - 1f / (DifficultyScaling * Time.time + 1f);
+    var time = Time.time - BaseTime;
+    return 1f - 1f / (DifficultyScaling * time + 1f);
   }
 
   private ObstacleDefinition PickObstacle(float difficulty)
