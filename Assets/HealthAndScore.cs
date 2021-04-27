@@ -14,6 +14,7 @@ public class HealthAndScore : MonoBehaviour
   public float ScoreInterval;
   public AudioSource DeathSound;
   public float RespawnDelay;
+  public float FadeDelay;
 
   private int Best;
   private int Score;
@@ -81,7 +82,14 @@ public class HealthAndScore : MonoBehaviour
   }
   private IEnumerator Death()
   {
-    yield return new WaitForSecondsRealtime(RespawnDelay);
+    yield return new WaitForSecondsRealtime(FadeDelay);
+    var fade = GameObject.FindObjectOfType<FadeToBlack>();
+    if (fade != null)
+    {
+      fade.TargetOpacity = 1f;
+      fade.Speed = 0.5f;
+    }
+    yield return new WaitForSecondsRealtime(RespawnDelay - FadeDelay);
     SceneManager.LoadScene("SampleScene");
   }
 }
