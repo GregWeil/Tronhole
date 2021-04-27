@@ -9,6 +9,7 @@ public class HealthAndScore : MonoBehaviour
   public UnityEngine.UI.Text HealthDisplay;
   public UnityEngine.UI.Text ScoreDisplay;
   public UnityEngine.UI.Text BestDisplay;
+  public UnityEngine.UI.Text LastDisplay;
   public float ScoreDelay;
   public float ScoreInterval;
   public AudioSource DeathSound;
@@ -22,6 +23,8 @@ public class HealthAndScore : MonoBehaviour
   {
     Best = PlayerPrefs.GetInt("BestScore", 0);
     BestDisplay.text = Best > 0 ? Best.ToString() : "---";
+    var Last = PlayerPrefs.GetInt("LastScore", 0);
+    LastDisplay.text = Last > 0 ? Last.ToString() : "---";
     ChangeHealth(0);
     ChangeScore(0);
     ScoreTimer = ScoreDelay;
@@ -67,6 +70,13 @@ public class HealthAndScore : MonoBehaviour
     if (Score > Best)
     {
       PlayerPrefs.SetInt("BestScore", Score);
+    }
+    if (Score > 0)
+    {
+      PlayerPrefs.SetInt("LastScore", Score);
+      LastDisplay.transform.parent.gameObject.SetActive(false);
+      ScoreDisplay.transform.parent.gameObject.SetActive(true);
+
     }
   }
   private IEnumerator Death()
